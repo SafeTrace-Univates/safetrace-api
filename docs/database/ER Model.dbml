@@ -1,0 +1,89 @@
+// Docs: https://dbml.dbdiagram.io/docs
+// Web-Editor: https://dbdiagram.io/home
+
+// RELATIONS:
+// <: one-to-many. E.g: users.id < posts.user_id
+// >: many-to-one. E.g: posts.user_id > users.id
+// -: one-to-one. E.g: users.id - user_infos.user_id
+// <>: many-to-many. E.g: authors.id <> books.id
+
+Table users {
+  id int [pk]
+  name text
+  email text
+  phone text
+  document text
+  password_hash text
+  created_at datetime
+  updated_at datetime
+}
+
+Table user_device {
+  id int [pk]
+  name text
+  ref_user int [ref: > users.id]
+  platform text
+  created_at datetime
+  updated_at datetime
+  deleted_at datetime
+  last_seen_at datetime
+}
+
+Table contact {
+  id int [pk]
+  ref_owner int [ref: > users.id]
+  ref_user int [ref: > users.id]
+  nickname text
+  created_at datetime
+  updated_at datetime
+  deleted_at datetime
+}
+
+Table alert {
+  id int [pk]
+  ref_user int [ref: > users.id]
+  created_at datetime
+}
+
+Table alert_contact {
+  id int [pk]
+  ref_alert int [ref: > alert.id]
+  ref_contact int [ref: > contact.id]
+}
+
+Table location {
+  id int [pk]
+  ref_alert int [ref: > alert.id]
+  latitude text
+  longitude text
+  created_at datetime
+}
+
+Table recording {
+  id int [pk]
+  ref_alert int [ref: > alert.id]
+  file_path text
+  created_at datetime
+}
+
+Table push_tokens {
+  token_id int [pk]
+  ref_device int [ref: > user_device.id]
+  push_token text
+  platform text
+  created_at datetime
+}
+
+Table audit_log {
+  id int [pk]
+  ref_user int [ref: > users.id]
+  action text
+  created_at datetime
+}
+
+Table encrypted_data {
+  id int [pk]
+  ref_user int [ref: > users.id]
+  data_type text
+  encrypted_value text
+}
