@@ -9,8 +9,9 @@ return [
     ],
     RoleEnum::USER->value  => [
         PermissionEnum::READ_USER->value,
-        PermissionEnum::ADD_CONTACT->value,
-        PermissionEnum::VIEW_CONTACTS->value,
+        PermissionEnum::CREATE_CONTACT->value,
+        PermissionEnum::READ_CONTACT->value,
         PermissionEnum::DELETE_CONTACT->value,
+        PermissionEnum::UPDATE_CONTACT->value,
     ],
 ];

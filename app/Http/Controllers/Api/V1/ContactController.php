@@ -8,7 +8,6 @@ use App\Http\Requests\Api\V1\StoreContactRequest;
 use App\Http\Requests\Api\V1\UpdateContactRequest;
 use App\Models\Contact;
 use App\Services\ContactService;
-use GuzzleHttp\Psr7\Query;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -17,14 +16,15 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = QueryBuilder::for(Contact::class)
+            ->where('ref_owner', auth()->id())
             ->allowedFilters([
                 AllowedFilter::exact('id'),
                 AllowedFilter::exact('ref_owner'),
                 AllowedFilter::exact('ref_user'),
                 AllowedFilter::custom(
                     'search',
-                    new SearchFilter(['id', 'ref_user', 'nickname','user.name'])
-                )
+                    new SearchFilter(['id', 'ref_user', 'nickname','user.name']),
+                ),
             ])
             ->allowedIncludes(['owner', 'user'])
             ->defaultSort('id')

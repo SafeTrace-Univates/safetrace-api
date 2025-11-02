@@ -8,7 +8,8 @@ enum PermissionEnum: string
     case ASSIGN_ROLE = 'assign_role';
     case REVOKE_ROLE = 'revoke_role';
 
-    case ADD_CONTACT    = 'add_contact';
-    case VIEW_CONTACTS  = 'view_contacts';
+    case CREATE_CONTACT = 'create_contact';
+    case READ_CONTACT   = 'read_contact';
     case DELETE_CONTACT = 'delete_contact';
+    case UPDATE_CONTACT = 'update_contact';
 }
