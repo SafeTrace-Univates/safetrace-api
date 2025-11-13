@@ -17,7 +17,7 @@ class AlertPolicy
 
     public function viewAny(User $user)
     {
-        if($user->can(PermissionEnum::READ_ALERT)) {
+        if ($user->can(PermissionEnum::READ_ALERT)) {
             return Response::allow();
         }
 
@@ -29,7 +29,7 @@ class AlertPolicy
 
     public function view(User $user, Alert $alert)
     {
-        if($user->can(PermissionEnum::READ_ALERT) && $alert->ref_user === $user->id) {
+        if ($user->can(PermissionEnum::READ_ALERT) && $alert->ref_user === $user->id) {
             return Response::allow();
         }
 
@@ -41,7 +41,7 @@ class AlertPolicy
 
     public function create(User $user)
     {
-        if($user->can(PermissionEnum::CREATE_ALERT)) {
+        if ($user->can(PermissionEnum::CREATE_ALERT)) {
             return Response::allow();
         }
 
@@ -53,7 +53,7 @@ class AlertPolicy
 
     public function update(User $user, Alert $alert)
     {
-        if($user->can(PermissionEnum::UPDATE_ALERT) && $alert->ref_user === $user->id) {
+        if ($user->can(PermissionEnum::UPDATE_ALERT) && $alert->ref_user === $user->id) {
             return Response::allow();
         }
 

@@ -18,7 +18,7 @@ class LocationPolicy
 
     public function viewAny(User $user)
     {
-        if($user->can(PermissionEnum::READ_LOCATION)) {
+        if ($user->can(PermissionEnum::READ_LOCATION)) {
             return Response::allow();
         }
 

@@ -9,11 +9,9 @@ use Illuminate\Http\Response;
 
 class RecordingPolicy
 {
-
-
     public function viewAny(User $user)
     {
-        if($user->can(PermissionEnum::READ_RECORDING)) {
+        if ($user->can(PermissionEnum::READ_RECORDING)) {
             return Response::allow();
         }
 
@@ -25,7 +23,7 @@ class RecordingPolicy
 
     public function view(User $user, Recording $recording)
     {
-        if($user->can(PermissionEnum::READ_RECORDING) && $recording->alert->ref_user === $user->id) {
+        if ($user->can(PermissionEnum::READ_RECORDING) && $recording->alert->ref_user === $user->id) {
             return Response::allow();
         }
 
@@ -37,7 +35,7 @@ class RecordingPolicy
 
     public function create(User $user)
     {
-        if($user->can(PermissionEnum::CREATE_RECORDING)) {
+        if ($user->can(PermissionEnum::CREATE_RECORDING)) {
             return Response::allow();
         }
 
