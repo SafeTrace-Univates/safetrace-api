@@ -8,6 +8,7 @@ use App\Http\Requests\Api\V1\StoreContactRequest;
 use App\Http\Requests\Api\V1\UpdateContactRequest;
 use App\Models\Contact;
 use App\Services\ContactService;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -16,7 +17,7 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = QueryBuilder::for(Contact::class)
-            ->where('ref_owner', auth()->id())
+            ->where('ref_owner', Auth::id())
             ->allowedFilters([
                 AllowedFilter::exact('id'),
                 AllowedFilter::exact('ref_owner'),

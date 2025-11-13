@@ -3,34 +3,33 @@
 namespace App\Policies;
 
 use App\Enums\PermissionEnum;
-use App\Models\Contact;
+use App\Models\Alert;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class ContactPolicy
+class AlertPolicy
 {
     protected string $modelName;
-
     public function __construct()
     {
-        $this->modelName = Contact::class;
+        $this->modelName = Alert::class;
     }
 
     public function viewAny(User $user)
     {
-        if ($user->can(PermissionEnum::READ_CONTACT)) {
+        if($user->can(PermissionEnum::READ_ALERT)) {
             return Response::allow();
         }
 
         return Response::deny(__(
             'policy.responses.deny.view.default',
             ['model' => $this->modelName],
-        ), );
+        ));
     }
 
-    public function view(User $user, Contact $contact)
+    public function view(User $user, Alert $alert)
     {
-        if ($user->can(PermissionEnum::READ_CONTACT) && $contact->ref_owner === $user->id) {
+        if($user->can(PermissionEnum::READ_ALERT) && $alert->ref_user === $user->id) {
             return Response::allow();
         }
 
@@ -42,7 +41,7 @@ class ContactPolicy
 
     public function create(User $user)
     {
-        if ($user->can(PermissionEnum::CREATE_CONTACT)) {
+        if($user->can(PermissionEnum::CREATE_ALERT)) {
             return Response::allow();
         }
 
@@ -52,26 +51,14 @@ class ContactPolicy
         ));
     }
 
-    public function update(User $user, Contact $contact)
+    public function update(User $user, Alert $alert)
     {
-        if ($user->can(PermissionEnum::UPDATE_CONTACT) && $contact->ref_owner === $user->id) {
+        if($user->can(PermissionEnum::UPDATE_ALERT) && $alert->ref_user === $user->id) {
             return Response::allow();
         }
 
         return Response::deny(__(
             'policy.responses.deny.update',
-            ['model' => $this->modelName],
-        ));
-    }
-
-    public function delete(User $user, Contact $contact)
-    {
-        if ($user->can(PermissionEnum::DELETE_CONTACT) && $contact->ref_owner === $user->id) {
-            return Response::allow();
-        }
-
-        return Response::deny(__(
-            'policy.responses.deny.delete',
             ['model' => $this->modelName],
         ));
     }

@@ -38,6 +38,11 @@ class Contact extends Model
         return $this->belongsTo(User::class, 'ref_user');
     }
 
+    public function alerts()
+    {
+        return $this->belongsToMany(Alert::class, 'alert_contact', 'ref_contact', 'ref_alert');
+    }
+
     public function toSearchableArray()
     {
         return [

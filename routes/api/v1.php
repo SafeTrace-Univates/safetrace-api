@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AlertController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ContactController;
+use App\Http\Controllers\Api\V1\LocationController;
+use App\Http\Controllers\Api\V1\RecordingController;
 use App\Http\Controllers\Api\V1\SettingController;
 use App\Http\Controllers\Api\V1\SystemController;
 use App\Http\Controllers\Api\V1\UserController;
@@ -32,6 +35,18 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('contact', ContactController::class)
             ->only(['index', 'show', 'store', 'update', 'destroy'])
             ->names('contact');
+
+        Route::apiResource('alert', AlertController::class)
+            ->only(['index', 'show', 'store', 'update'])
+            ->names('alert');
+
+        Route::apiResource('location', LocationController::class)
+            ->only(['index', 'show', 'store'])
+            ->names('location');
+
+        Route::apiResource('recording', RecordingController::class)
+            ->only(['index', 'show', 'store'])
+            ->names('recording');
 
         Route::post('user/{user}/sync-role', [UserController::class, 'syncRoles'])->name('user.sync-roles');
     });
