@@ -6,6 +6,7 @@ use App\Helpers\Spatie\QueryBuilder\Filters\SearchFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\StoreAlertRequest;
 use App\Http\Requests\Api\V1\UpdateAlertRequest;
+use App\Http\Resources\Api\V1\AlertResource;
 use App\Models\Alert;
 use App\Services\AlertService;
 use Illuminate\Support\Facades\Auth;
@@ -35,12 +36,12 @@ class AlertController extends Controller
             ->defaultSort('id')
             ->jsonPaginate();
 
-        return $alerts;
+        return AlertResource::collection($alerts);
     }
 
     public function store(StoreAlertRequest $request)
     {
-        return AlertService::make()->create($request->validated())->alert;
+        return new AlertResource(AlertService::make()->create($request->validated())->alert);
     }
 
     public function show(Alert $alert)
@@ -53,11 +54,11 @@ class AlertController extends Controller
                 'recordings',
             ])
             ->firstOrFail();
-        return $alert;
+        return new AlertResource($alert);
     }
 
     public function update(UpdateAlertRequest $request, Alert $alert)
     {
-        return AlertService::make($alert)->update($request->validated())->alert;
+        return new AlertResource(AlertService::make($alert)->update($request->validated())->alert);
     }
 }
